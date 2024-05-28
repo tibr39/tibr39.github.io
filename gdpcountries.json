@@ -1,0 +1,285 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "GDP amongst Ex-Soviet and European Union members",
+  "width": 850,
+  "height": 700,
+  "title": {
+    "text": "GDP amongst Ex-Soviet and European Union members",
+    "offset":5
+
+  },
+  "data": {
+    "url": "https://raw.githubusercontent.com/tibr39/tibr39.github.io/main/data/countriesecoindexes.csv"
+  },
+
+
+
+
+  "params": [
+
+    {
+      "name": "MinYear",
+      "value": 1971,
+      "bind": {
+        "input": "range",
+        "min": 1971,
+        "max": 2021,
+        "step": 1,
+        "name": "Select Min Year:"
+      }
+    },
+    {
+      "name": "MaxYear",
+      "value": 2021,
+      "bind": {
+        "input": "range",
+        "min": 1971,
+        "max": 2021,
+        "step": 1,
+        "name": "Select Max Year:"
+      }
+    },
+    {
+      "name": "countrySelector",
+      "bind": {
+        "input": "select",
+        "options": [
+          " Austria ",
+          " Belgium ",
+          " Bulgaria ",
+          " Croatia ",
+          " Republic of Cyprus ",
+          " Czech Republic ",
+          " Denmark ",
+          " Estonia ",
+          " Finland ",
+          " France ",
+          " Germany ",
+          " Greece ",
+          " Hungary ",
+          " Ireland ",
+          " Italy ",
+          " Latvia ",
+          " Lithuania ",
+          " Luxembourg ",
+          " Malta ",
+          " Netherlands ",
+          " Poland ",
+          " Portugal ",
+          " Romania ",
+          " Slovakia ",
+          " Slovenia ",
+          " Spain ",
+          " Sweden ",
+          " Armenia ",
+          " Azerbaijan ",
+          " Belarus ",
+          " Estonia ",
+          " Georgia ",
+          " Kazakhstan ",
+          " Kyrgyzstan ",
+          " Latvia ",
+          " Lithuania ",
+          " Moldova ",
+          " Russia ",
+          " Tajikistan ",
+          " Turkmenistan ",
+          " Ukraine ",
+          " Uzbekistan "
+        ],
+        "name": "Select countries:"
+      }
+    },
+    {
+      "name": "countrySelector2",
+      "bind": {
+        "input": "select",
+        "options": [
+          " Austria ",
+          " Belgium ",
+          " Bulgaria ",
+          " Croatia ",
+          " Republic of Cyprus ",
+          " Czech Republic ",
+          " Denmark ",
+          " Estonia ",
+          " Finland ",
+          " France ",
+          " Germany ",
+          " Greece ",
+          " Hungary ",
+          " Ireland ",
+          " Italy ",
+          " Latvia ",
+          " Lithuania ",
+          " Luxembourg ",
+          " Malta ",
+          " Netherlands ",
+          " Poland ",
+          " Portugal ",
+          " Romania ",
+          " Slovakia ",
+          " Slovenia ",
+          " Spain ",
+          " Sweden ",
+          " Armenia ",
+          " Azerbaijan ",
+          " Belarus ",
+          " Estonia ",
+          " Georgia ",
+          " Kazakhstan ",
+          " Kyrgyzstan ",
+          " Latvia ",
+          " Lithuania ",
+          " Moldova ",
+          " Russia ",
+          " Tajikistan ",
+          " Turkmenistan ",
+          " Ukraine ",
+          " Uzbekistan "
+        ],
+        "name": "Select countries:"
+      }
+    },
+    {
+      "name": "countrySelector3",
+      "bind": {
+        "input": "select",
+        "options": [
+          " Austria ",
+          " Belgium ",
+          " Bulgaria ",
+          " Croatia ",
+          " Republic of Cyprus ",
+          " Czech Republic ",
+          " Denmark ",
+          " Estonia ",
+          " Finland ",
+          " France ",
+          " Germany ",
+          " Greece ",
+          " Hungary ",
+          " Ireland ",
+          " Italy ",
+          " Latvia ",
+          " Lithuania ",
+          " Luxembourg ",
+          " Malta ",
+          " Netherlands ",
+          " Poland ",
+          " Portugal ",
+          " Romania ",
+          " Slovakia ",
+          " Slovenia ",
+          " Spain ",
+          " Sweden ",
+          " Armenia ",
+          " Azerbaijan ",
+          " Belarus ",
+          " Estonia ",
+          " Georgia ",
+          " Kazakhstan ",
+          " Kyrgyzstan ",
+          " Latvia ",
+          " Lithuania ",
+          " Moldova ",
+          " Russia ",
+          " Tajikistan ",
+          " Turkmenistan ",
+          " Ukraine ",
+          " Uzbekistan "
+        ],
+        "name": "Select countries:"
+      }
+    },
+    {
+      "name": "countrySelector4",
+      "bind": {
+        "input": "select",
+        "options": [
+          " Austria ",
+          " Belgium ",
+          " Bulgaria ",
+          " Croatia ",
+          " Republic of Cyprus ",
+          " Czech Republic ",
+          " Denmark ",
+          " Estonia ",
+          " Finland ",
+          " France ",
+          " Germany ",
+          " Greece ",
+          " Hungary ",
+          " Ireland ",
+          " Italy ",
+          " Latvia ",
+          " Lithuania ",
+          " Luxembourg ",
+          " Malta ",
+          " Netherlands ",
+          " Poland ",
+          " Portugal ",
+          " Romania ",
+          " Slovakia ",
+          " Slovenia ",
+          " Spain ",
+          " Sweden ",
+          " Armenia ",
+          " Azerbaijan ",
+          " Belarus ",
+          " Estonia ",
+          " Georgia ",
+          " Kazakhstan ",
+          " Kyrgyzstan ",
+          " Latvia ",
+          " Lithuania ",
+          " Moldova ",
+          " Russia ",
+          " Tajikistan ",
+          " Turkmenistan ",
+          " Ukraine ",
+          " Uzbekistan "
+        ],
+        "name": "Select countries:"
+      }
+    }
+  ],
+  "mark": "line",
+  "encoding": {
+    "x": {"field": "date", "type": "temporal", "axis":{"tickCount":"year","labelAngle": 90}},
+    "y": {"field": "gdp_in_millions", "type": "quantitative", "axis": {  "title":"GDP in million $",     
+        "offset":5,"labelAlign": "right",  
+        "labelPadding": 1, "ticks": true,"tickSize":5}},
+    "color": {"field": "country", "type": "nominal", "legend":{"padding":20}}
+    
+  },
+  
+  
+      "transform": [
+        {"timeUnit": "yearmonthdate", "field": "date", "as": "datetime_field"},
+        {"calculate": "datum.gdp / 1000000", "as": "gdp_in_millions"},
+
+          {"filter":{
+        "field": "country",
+        "oneOf": [
+          {"signal": "countrySelector"},
+          {"signal": "countrySelector2"},
+          {"signal": "countrySelector3"},
+          {"signal": "countrySelector4"}
+        ]
+        }},
+        
+        {"filter": {"timeUnit": "year", "field": "date", "range": ["MinYear", "MaxYear"] }}
+      ],
+    
+
+  "config": {    "view": {
+      "stroke": "transparent"
+    },
+    "padding": {
+      "left": 100,
+      "top": 10,
+      "bottom": 20
+      
+    }}
+}
