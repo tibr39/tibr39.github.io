@@ -1,22 +1,13 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "GDP amongst Post-Soviet and European Union members",
-  "width": 850,
+  "description": "A scatterplot showing body mass and flipper lengths of penguins.",
+  "width": 1050,
+  "title": "GDP vs. Household Expenditure: A Comparison of Post-Soviet and EU Member Countries",
   "height": 700,
-  "title": {
-    "text": "GDP amongst Ex-Soviet and European Union members",
-    "offset":5
-
-  },
   "data": {
     "url": "https://raw.githubusercontent.com/tibr39/tibr39.github.io/main/countriesecoindexes.csv"
   },
-
-
-
-
   "params": [
-
     {
       "name": "MinYear",
       "value": 1971,
@@ -244,22 +235,16 @@
       }
     }
   ],
-  "mark": "line",
-  "encoding": {
-    "x": {"field": "year", "type": "temporal", "axis":{"tickCount":"year","labelAngle": 90}},
-    "y": {"field": "gdp_in_millions", "type": "quantitative", "axis": {  "title":"GDP in million $",     
-        "offset":5,"labelAlign": "right",  
-        "labelPadding": 1, "ticks": true,"tickSize":5}},
-    "color": {"field": "country", "type": "nominal", "legend":{"padding":20}}
-    
-  },
-  
-  
-      "transform": [
-        {"timeUnit": "yearmonthdate", "field": "year", "as": "datetime_field"},
-        {"calculate": "datum.gdp / 1000000", "as": "gdp_in_millions"},
-
-          {"filter":{
+  "transform": [
+    {
+      "filter": {
+        "timeUnit": "year",
+        "field": "year",
+        "range": ["MinYear", "MaxYear"]
+      }
+    },
+    {
+      "filter": {
         "field": "country",
         "oneOf": [
           {"signal": "countrySelector"},
@@ -267,19 +252,32 @@
           {"signal": "countrySelector3"},
           {"signal": "countrySelector4"}
         ]
-        }},
-        
-        {"filter": {"timeUnit": "year", "field": "year", "range": ["MinYear", "MaxYear"] }}
-      ],
-    
-
-  "config": {    "view": {
-      "stroke": "transparent"
+      }
     },
-    "padding": {
-      "left": 100,
-      "top": 10,
-      "bottom": 20
-      
-    }}
+    {"calculate": "datum.gdp / 1000000", "as": "gdp_in_millions"},
+    {
+      "calculate": "datum['Household consumption expenditure (including Non-profit institutions serving households)'] / 1000000",
+      "as": "expenditure_in_millions"
+    }
+  ],
+  "mark": "point",
+  "encoding": {
+    "x": {
+      "field": "expenditure_in_millions",
+      "type": "quantitative",
+      "scale": {"zero": false}
+    },
+    "y": {
+      "field": "gdp_in_millions",
+      "title": "Gross Domestic Product(In million $)",
+      "type": "quantitative",
+      "scale": {"zero": false}
+    },
+    "color": {"field": "country", "type": "nominal"},
+    "shape": {"field": "country", "type": "nominal"}
+  },
+  "config": {
+    "view": {"stroke": "transparent"},
+    "padding": {"left": 60, "right": 50, "top": 10, "bottom": 20}
+  }
 }

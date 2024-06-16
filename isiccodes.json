@@ -1,19 +1,10 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "GDP amongst Post-Soviet and European Union members",
-  "width": 850,
-  "height": 700,
-  "title": {
-    "text": "GDP amongst Ex-Soviet and European Union members",
-    "offset":5
-
-  },
-  "data": {
+  "height":700,
+  "width":1000,
+    "data": {
     "url": "https://raw.githubusercontent.com/tibr39/tibr39.github.io/main/countriesecoindexes.csv"
   },
-
-
-
 
   "params": [
 
@@ -244,22 +235,29 @@
       }
     }
   ],
-  "mark": "line",
-  "encoding": {
-    "x": {"field": "year", "type": "temporal", "axis":{"tickCount":"year","labelAngle": 90}},
-    "y": {"field": "gdp_in_millions", "type": "quantitative", "axis": {  "title":"GDP in million $",     
-        "offset":5,"labelAlign": "right",  
-        "labelPadding": 1, "ticks": true,"tickSize":5}},
-    "color": {"field": "country", "type": "nominal", "legend":{"padding":20}}
-    
-  },
-  
-  
-      "transform": [
-        {"timeUnit": "yearmonthdate", "field": "year", "as": "datetime_field"},
-        {"calculate": "datum.gdp / 1000000", "as": "gdp_in_millions"},
 
-          {"filter":{
+"transform": [
+  
+  {"filter": {"timeUnit": "year", "field": "year", "range": ["MinYear", "MaxYear"] }},
+
+
+    {
+      "fold": ["ISIC A-B", "ISIC F","ISIC D","ISIC C-E","ISIC J-P","ISIC I","ISIC G-H"],
+      "as": ["group", "value"]
+    },
+
+    {
+      "aggregate": [
+        {"op": "sum", "field": "value", "as": "total_value"}
+      ],
+      "groupby": ["country", "group"]
+    },
+
+      {
+      "calculate": "datum.total_value / 1000000", "as": "total_value_in_millions"
+    },
+
+    {"filter":{
         "field": "country",
         "oneOf": [
           {"signal": "countrySelector"},
@@ -268,18 +266,58 @@
           {"signal": "countrySelector4"}
         ]
         }},
-        
-        {"filter": {"timeUnit": "year", "field": "year", "range": ["MinYear", "MaxYear"] }}
-      ],
-    
+           {
+    "lookup": "group",
+    "from": {
+      "data": {
+        "values": [
+          {"group": "ISIC A-B", "explanation": "Agriculture & Mining"},
+          {"group": "ISIC F", "explanation": "Construction"},
+          {"group": "ISIC D", "explanation": "Utilities"},
+          {"group": "ISIC C-E", "explanation": "Manufacturing & Water"},
+          {"group": "ISIC J-P", "explanation": "Services"},
+          {"group": "ISIC I", "explanation": "Accom & Food"},
+          {"group": "ISIC G-H", "explanation": "Trade & Transport"}
+        ]
+      },
+      "key": "group",
+      "fields": ["explanation"]
+    },
+    "as": "simplified_explanation"
+  }
 
-  "config": {    "view": {
+
+
+        
+      ],
+  
+
+ "mark": "bar",
+  "encoding": {
+    "x": {"field": "country", "type": "nominal", "axis":{"labelFontSize":12}},
+    "y": {"field": "total_value_in_millions","axis":{"labelFontSize":12}, "type": "quantitative","title":"Combined Economic Output (million $)"},
+    "xOffset": {"field": "group"},
+    "color": {"field": "group", "type": "nominal","title":"ISIC Sectors"},
+     "tooltip": [ 
+       {"field": "total_value_in_millions", "type": "quantitative", "title": "Total Value (Millions)"},
+
+   {"field": "simplified_explanation", "type": "nominal","title":"Explanation:"}
+
+     ]
+    
+  },
+
+
+
+"config": {    "view": {
       "stroke": "transparent"
     },
+     
+    "legend": {"orient": "bottom-right","offset":-90},
     "padding": {
-      "left": 100,
-      "top": 10,
-      "bottom": 20
+      "left": 60,
+      "top": 20,
+      "bottom": 50
       
     }}
 }

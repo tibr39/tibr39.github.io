@@ -37,7 +37,7 @@
 <!-- The body tag contains the elements that visitors to our page will see. -->
     <h1 class="big" style="margin-bottom: 0px;"> <!-- We have added a class to the header called "big" which we can use to style it in the CSS -->
         <!-- This is a header, it is the largest text on the page -->
-        Economoic indexes amongs Ex-soviet and EU member countries
+        Economoic indexes amongst Post-Soviet and EU member countries
     </h1>
     <p style="margin-top: 0px; color: darkblue">
         <!-- we're setting the margin to 0px so the header and authour name are close together -->
@@ -45,13 +45,13 @@
             href="https://github.com/tibr39">GitHub</a>
     </p>
     <h3 class="small"> <!-- We have added a class to the header called "small" which we can use to style it in the CSS -->
-        This page offers interactive charts that enable exploration of economic indicators across European Union and Ex-Soviet nations. Through a range of visualizations, users can compare the differences in economic performance among these countries and gain insights into their development over time.
+        This page offers interactive charts that enable exploration of economic indicators across European Union and Post-Soviet nations. Through a range of visualizations, users can compare the differences in economic performance among these countries and gain insights into their development over time.
     </h3>
 
     <!-- We're organising the page into sections, with each section containing a chart, title and a description -->
     <section>
         <div class="chart-description">
-            <h2>Section 1: GDP amongst Ex-Soviet and European Union members</h2>
+            <h2>Section 1: GDP amongst Post-Soviet and European Union members</h2>
             <p> <!-- This is a paragraph, it's the main way to display text on a web page -->
                 This chart displays Gross Domestic Product values in millions of dollars. Using the country selector, we can choose between various countries. Additionally, the chart includes a slider for selecting preferred date ranges. These two filters enable us to analyze more than two countries and various time periods.
             </p>
@@ -61,10 +61,10 @@
 
     <section>
         <div class="chart-description"> <!-- we are grouping the title and description together so we can style them together -->
-            <h2>Section 2: Another Chart</h2>
+            <h2>Section 2: Economic Output of ISIC Sectors in Post-Soviet and EU Member Countries</h2>
             <p> <!-- This is a paragraph, it's the main way to display text on a web page -->
-                This is a more advanced chart. We'll cover charts like this in more detail later today. Don't worry if you don't understand it yet.
-                Feel free to replace both charts with your own examples.
+                This chart visualizes the combined economic output of ISIC sectors across various countries. The values are displayed in millions of dollars. The country selector allows us to compare different countries' economic performances, 
+                while the slider enables selection of specific date ranges. Also, we have a tooltip that appears when hovering over the bars, explaining which ISIC sector each bar represents.
             </p>
         </div>
         <figure id="Location2"></figure> <!-- we give it an id so we can put a vega-lite graph here with VegaEmbed -->
@@ -72,14 +72,38 @@
 
     <section>
         <div class="chart-description"> <!-- we are grouping the title and description together so we can style them together -->
-            <h2>Section 3: Another Chart</h2>
+            <h2>Section 3: Exports and Imports of Post-Soviet and EU Member Countries</h2>
             <p> <!-- This is a paragraph, it's the main way to display text on a web page -->
-                This is a more advanced chart. We'll cover charts like this in more detail later today. Don't worry if you don't understand it yet.
-                Feel free to replace both charts with your own examples.
+                This chart visualizes the values of exports and imports in millions of dollars across Post-Soviet and EU member countries. Users can compare trade performances among different countries using the country selector. Additionally, the slider enables selection of specific date ranges.Also for more precise values there is a tooltip which shows us the exact aggregated sum of values if we hover upon the bars.
             </p>
         </div>
         <figure id="Location3"></figure> <!-- we give it an id so we can put a vega-lite graph here with VegaEmbed -->
     </section>
+
+
+    <section>
+        <div class="chart-description"> <!-- we are grouping the title and description together so we can style them together -->
+            <h2>Section 4: GDP vs. Household Expenditure: A Comparison of Post-Soviet and EU Member Countries</h2>
+            <p> <!-- This is a paragraph, it's the main way to display text on a web page -->
+                This chart compares Gross Domestic Product (GDP) and household expenditure in millions of dollars across Post-Soviet and EU member countries. It highlights the economic disparities and consumer spending patterns between these two groups of nations. The country selector allows for specific country comparisons, while the interactive nature of the chart facilitates analysis over different time periods.
+            </p>
+        </div>
+        <figure id="Location4"></figure> <!-- we give it an id so we can put a vega-lite graph here with VegaEmbed -->
+    </section>
+
+
+
+    <section>
+        <div class="chart-description"> <!-- we are grouping the title and description together so we can style them together -->
+            <h2>Section 5: Changes in Inventories Across Post-Soviet and EU Member Countries</h2>
+            <p> <!-- This is a paragraph, it's the main way to display text on a web page -->
+                This chart visualizes the changes in inventories across Post-Soviet and EU member countries. The values are displayed in millions of dollars, reflecting fluctuations in stored goods over time. Users can use the country selector to compare inventory changes among different nations. Additionally, the slider allows for selection of specific date ranges, enabling detailed analysis of inventory trends over varying periods.
+            </p>
+        </div>
+        <figure id="Location5"></figure> <!-- we give it an id so we can put a vega-lite graph here with VegaEmbed -->
+    </section>
+
+
 
 
     <!-- Do you want to add more sections? -->
@@ -93,12 +117,16 @@
         // This is a comment in JavaScript - it's a different language to HTML and CSS
 
         var figure_1_spec = "gdpcountries.json"; // We're storing the URL of the graph we want to display in a variable
-        var figure_2_spec = "https://raw.githubusercontent.com/EconomicsObservatory/courses/main/2/s2_chart2.json";
-        var figure_3_spec = "harmas.json";
+        var figure_2_spec = "isiccodes.json";
+        var figure_3_spec = "importsexports.json";
+        var figure_4_spec = "gdpvsexpenditure.json";
+        var figure_5_spec = "changeininventories.json";
 
         vegaEmbed('#Location1', figure_1_spec) // We're using the vegaEmbed function to put a graph in the element with id figure_1
         vegaEmbed('#Location2', figure_2_spec)
         vegaEmbed('#Location3', figure_3_spec)
+        vegaEmbed('#Location4', figure_4_spec)
+        vegaEmbed('#Location5', figure_5_spec)
 
         // Do you want to add more graphs?
         // try defining a new variable for figure_3_spec, adding VegaEmbed for Location3, and adding a new section in the HTML

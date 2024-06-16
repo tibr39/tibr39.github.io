@@ -1,22 +1,16 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "GDP amongst Post-Soviet and European Union members",
-  "width": 850,
-  "height": 700,
+  "description": "A bar chart with negative values. We can hide the axis domain line, and instead use a conditional grid color to draw a zero baseline.",
   "title": {
-    "text": "GDP amongst Ex-Soviet and European Union members",
-    "offset":5
-
+    "text": "Changes in Inventories Across Pos-Soviet and EU Member Countries",
+    "offset": 5
   },
+  "width": 850,
+  "height": 900,
   "data": {
     "url": "https://raw.githubusercontent.com/tibr39/tibr39.github.io/main/countriesecoindexes.csv"
   },
-
-
-
-
   "params": [
-
     {
       "name": "MinYear",
       "value": 1971,
@@ -244,22 +238,16 @@
       }
     }
   ],
-  "mark": "line",
-  "encoding": {
-    "x": {"field": "year", "type": "temporal", "axis":{"tickCount":"year","labelAngle": 90}},
-    "y": {"field": "gdp_in_millions", "type": "quantitative", "axis": {  "title":"GDP in million $",     
-        "offset":5,"labelAlign": "right",  
-        "labelPadding": 1, "ticks": true,"tickSize":5}},
-    "color": {"field": "country", "type": "nominal", "legend":{"padding":20}}
-    
-  },
-  
-  
-      "transform": [
-        {"timeUnit": "yearmonthdate", "field": "year", "as": "datetime_field"},
-        {"calculate": "datum.gdp / 1000000", "as": "gdp_in_millions"},
-
-          {"filter":{
+  "transform": [
+    {
+      "filter": {
+        "timeUnit": "year",
+        "field": "year",
+        "range": ["MinYear", "MaxYear"]
+      }
+    },
+    {
+      "filter": {
         "field": "country",
         "oneOf": [
           {"signal": "countrySelector"},
@@ -267,19 +255,44 @@
           {"signal": "countrySelector3"},
           {"signal": "countrySelector4"}
         ]
-        }},
-        
-        {"filter": {"timeUnit": "year", "field": "year", "range": ["MinYear", "MaxYear"] }}
-      ],
-    
-
-  "config": {    "view": {
-      "stroke": "transparent"
+      }
     },
-    "padding": {
-      "left": 100,
-      "top": 10,
-      "bottom": 20
-      
-    }}
+    {
+      "calculate": "datum['Changes in inventories'] / 1000000",
+      "as": "inventroy_in_millions"
+    }
+  ],
+  "mark": {"type": "bar", "width": {"band": 0.5}},
+  "encoding": {
+    "x": {
+      "field": "country",
+      "type": "nominal",
+      "axis": {
+        "domain": false,
+        "ticks": false,
+        "labelAngle": -45,
+        "labelPadding": 5,
+        "labelFontSize": 12
+      }
+    },
+    "y": {
+      "aggregate": "sum",
+      "field": "inventroy_in_millions",
+      "type": "quantitative",
+      "axis": {
+        "title": "Change of Inventories (in Millions)",
+        "titleFontSize": 14,
+        "gridColor": {
+          "condition": {"test": "datum.value === 0", "value": "black"},
+          "value": "#ddd",
+          "labelPadding": 1,
+          "labelFontSize": 12
+        }
+      }
+    }
+  },
+  "config": {
+    "bar": {"width": 20, "discreteBandSize": 30},
+    "padding": {"left": 100, "top": 10, "bottom": 50}
+  }
 }

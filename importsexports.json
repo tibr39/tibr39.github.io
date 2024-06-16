@@ -1,22 +1,12 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "GDP amongst Post-Soviet and European Union members",
-  "width": 850,
-  "height": 700,
-  "title": {
-    "text": "GDP amongst Ex-Soviet and European Union members",
-    "offset":5
-
-  },
+  "description": "Imports exports.",
+  "title":" Exports and Imports in Post-Soviet and EU Member Countries",
+  "background": "white",
   "data": {
     "url": "https://raw.githubusercontent.com/tibr39/tibr39.github.io/main/countriesecoindexes.csv"
   },
-
-
-
-
   "params": [
-
     {
       "name": "MinYear",
       "value": 1971,
@@ -244,22 +234,16 @@
       }
     }
   ],
-  "mark": "line",
-  "encoding": {
-    "x": {"field": "year", "type": "temporal", "axis":{"tickCount":"year","labelAngle": 90}},
-    "y": {"field": "gdp_in_millions", "type": "quantitative", "axis": {  "title":"GDP in million $",     
-        "offset":5,"labelAlign": "right",  
-        "labelPadding": 1, "ticks": true,"tickSize":5}},
-    "color": {"field": "country", "type": "nominal", "legend":{"padding":20}}
-    
-  },
-  
-  
-      "transform": [
-        {"timeUnit": "yearmonthdate", "field": "year", "as": "datetime_field"},
-        {"calculate": "datum.gdp / 1000000", "as": "gdp_in_millions"},
-
-          {"filter":{
+  "transform": [
+    {
+      "filter": {
+        "timeUnit": "year",
+        "field": "year",
+        "range": ["MinYear", "MaxYear"]
+      }
+    },
+    {
+      "filter": {
         "field": "country",
         "oneOf": [
           {"signal": "countrySelector"},
@@ -267,19 +251,97 @@
           {"signal": "countrySelector3"},
           {"signal": "countrySelector4"}
         ]
-        }},
-        
-        {"filter": {"timeUnit": "year", "field": "year", "range": ["MinYear", "MaxYear"] }}
-      ],
-    
-
-  "config": {    "view": {
-      "stroke": "transparent"
+      }
     },
-    "padding": {
-      "left": 100,
-      "top": 10,
-      "bottom": 20
-      
-    }}
+    {
+      "fold": [
+        "Imports of goods and services",
+        "Exports of goods and services"
+      ],
+      "as": ["type", "value"]
+    },
+
+    {
+      "aggregate": [
+        {"op": "sum", "field": "value", "as": "total_value"}
+      ],
+      "groupby": ["country", "type"]
+    },
+    {
+      "calculate": "datum.type === 'Imports of goods and services' ? 'Import' : 'Export'",
+      "as": "tradeType"
+    },
+    {"calculate": "datum.total_value / 1000000", "as": "total_value_in_millions"}
+  ],
+  "spacing": 0,
+  "hconcat": [
+    {
+      "transform": [{"filter": {"field": "tradeType", "equal": "Import"}}],
+      "title": "Imports",
+      "mark": "bar",
+      "width": 500,
+      "encoding": {
+        "y": {"field": "country", "type": "nominal", "axis": null},
+        "x": {
+          "aggregate": "sum",
+          "field": "total_value_in_millions",
+          "title": "Imports of goods and services(In million $)",
+          "axis": {"format": "s"},
+          "sort": "descending"
+        },
+
+        "tooltip": [ 
+       {"field": "total_value_in_millions", "type": "quantitative", "title": "Total Imports (Millions)"}
+
+
+     ],
+        "color": {
+          "field": "tradeType",
+          "scale": {"range": ["#675193", "#ca8861"]},
+          "legend": null
+        }
+      }
+    },
+    {
+      "view": {"stroke": null},
+      "mark": {"type": "text", "align": "center"},
+      "title": {
+        "text": "Imports and Exports amongst Ex-Soviet and EU countries",
+        "align": "center",
+        "offset": 500
+      },
+      "encoding": {"y": {"field": "country", "type": "nominal", "title": null}}
+    },
+    {
+      "transform": [{"filter": {"field": "tradeType", "equal": "Export"}}],
+      "title": "Exports",
+      "mark": "bar",
+      "width": 500,
+      "encoding": {
+        "y": {
+          "field": "country",
+          "type": "nominal",
+          "title": null,
+          "axis": null,
+          "sort": "descending"
+        },
+        "x": {
+          "aggregate": "sum",
+          "field": "total_value_in_millions",
+          "title": "Exports of goods and services(In million $)",
+          "axis": {"format": "s"}
+        },
+        "tooltip": [ 
+          {"field": "total_value_in_millions", "type": "quantitative", "title": "Total Exports (Millions)"}
+   
+   
+        ],
+        "color": {"field": "tradeType", "legend": null}
+      }
+    }
+  ],
+  "config": {
+    "axis": {"grid": true},
+    "padding": {"left": 100, "right": 100, "top": 100, "bottom": 80}
+  }
 }
