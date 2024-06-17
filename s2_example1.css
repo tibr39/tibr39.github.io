@@ -1,0 +1,104 @@
+/* This is the level 1 CSS file. If you include it in your portfolio, it'll provide some clean and basic styling */
+/* for your page. Feel free to experiment with the values, or copy them into a new file and use that instead. */
+
+/* These are comments in CSS. Comments don't do anything except explain your working to make code easier to understand. */
+
+html, body {
+  margin: 5px; /* Specify units for margin */
+  padding: 5px; /* Specify units for padding */
+  padding-left: 100px; /* Adjust the value as needed */
+  width: 100%;
+  height: 100%;
+  overflow-x: auto; /* Prevent horizontal scrolling */
+  
+}
+
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  color: #000000;
+  line-height: 1.6;
+  background-color: #fff;
+  margin: 0 auto;
+  max-width: 2000px;
+  padding: 60px 20px; /* Add padding to top and sides */
+  position: relative;
+  z-index: 1; /* Ensure content is above the gradient */
+}
+
+/* Add gradient animation to the background */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(-45deg, #1c42ee, #593e99, #4d548f, #207de7);
+  background-size: 400% 400%;
+  animation: gradient 10s ease infinite;
+  z-index: -1; /* Ensure it stays behind all other content */
+}
+
+@keyframes gradient {
+  0% {
+      background-position: 0% 50%;
+  }
+  50% {
+      background-position: 100% 50%;
+  }
+  100% {
+      background-position: 0% 50%;
+  }
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  padding: 40px;
+  color: #000000;
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+/* We want the headings to be a little bigger than the paragraph text */
+.big {
+  font-size: 2.5em;
+}
+
+h2 {
+  font-size: 1.75em;
+}
+
+.small {
+  font-size: 1.25em;
+}
+
+/* Paragraph */
+p {
+  padding: 40px;
+  margin-bottom: 1em;
+  font-weight: 300;
+  font-size: 1.55em;
+}
+
+section {
+  margin-bottom: 2.5em; /* We want a little more space between sections */
+}
+
+/* Links */
+/* We want the links to be a little more visible and a different color */
+a {
+  color: #000000;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  height: auto;
+}
