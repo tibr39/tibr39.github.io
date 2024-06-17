@@ -33,7 +33,9 @@
     <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 </head>
 
-<body> 
+<body > 
+    <div class="content-wrapper">
+    <div class="transparent-overlay"></div>
 <!-- The body tag contains the elements that visitors to our page will see. -->
     <h1 class="big" style="margin-bottom: 0px;"> <!-- We have added a class to the header called "big" which we can use to style it in the CSS -->
         <!-- This is a header, it is the largest text on the page -->
@@ -41,15 +43,20 @@
     </h1>
     <p style="margin-top: 0px; color: darkblue">
         <!-- we're setting the margin to 0px so the header and authour name are close together -->
-        György Tibor | <a href="https://www.linkedin.com/in/finnmcevoy/">LinkedIn</a> | <a
+        György Tibor | <a
             href="https://github.com/tibr39">GitHub</a>
     </p>
+    <a href="#S1">Jump to Chapter 1</a>
+    <a href="#S2">Jump to Chapter 2</a>
+    <a href="#S3">Jump to Chapter 3</a>
+    <a href="#S4">Jump to Chapter 4</a>
+    <a href="#S5">Jump to Chapter 5</a>
     <h3 class="small"> <!-- We have added a class to the header called "small" which we can use to style it in the CSS -->
-        This page offers interactive charts that enable exploration of economic indicators across European Union and Post-Soviet nations. Through a range of visualizations, users can compare the differences in economic performance among these countries and gain insights into their development over time.
+        This page offers interactive charts that enable exploration of economic indicators across European Union and Post-Soviet nations. <br>Through a range of visualizations, users can compare the differences in economic performance among these countries and<br> gain insights into their development over time.
     </h3>
 
     <!-- We're organising the page into sections, with each section containing a chart, title and a description -->
-    <section>
+    <section ID="S1">
         <div class="chart-description">
             <h2>Section 1: GDP amongst Post-Soviet and European Union members</h2>
             <p> <!-- This is a paragraph, it's the main way to display text on a web page -->
@@ -59,7 +66,7 @@
         <figure id="Location1"></figure> <!-- we give it an id so we can put a vega-lite graph here with VegaEmbed -->
     </section>
 
-    <section>
+    <section ID="S2">
         <div class="chart-description"> <!-- we are grouping the title and description together so we can style them together -->
             <h2>Section 2: Economic Output of ISIC Sectors in Post-Soviet and EU Member Countries</h2>
             <p> <!-- This is a paragraph, it's the main way to display text on a web page -->
@@ -70,7 +77,7 @@
         <figure id="Location2"></figure> <!-- we give it an id so we can put a vega-lite graph here with VegaEmbed -->
     </section>
 
-    <section>
+    <section ID="S3">
         <div class="chart-description"> <!-- we are grouping the title and description together so we can style them together -->
             <h2>Section 3: Exports and Imports of Post-Soviet and EU Member Countries</h2>
             <p> <!-- This is a paragraph, it's the main way to display text on a web page -->
@@ -81,7 +88,7 @@
     </section>
 
 
-    <section>
+    <section ID="S4">
         <div class="chart-description"> <!-- we are grouping the title and description together so we can style them together -->
             <h2>Section 4: GDP vs. Household Expenditure: A Comparison of Post-Soviet and EU Member Countries</h2>
             <p> <!-- This is a paragraph, it's the main way to display text on a web page -->
@@ -93,7 +100,7 @@
 
 
 
-    <section>
+    <section ID="S5">
         <div class="chart-description"> <!-- we are grouping the title and description together so we can style them together -->
             <h2>Section 5: Changes in Inventories Across Post-Soviet and EU Member Countries</h2>
             <p> <!-- This is a paragraph, it's the main way to display text on a web page -->
@@ -102,7 +109,7 @@
         </div>
         <figure id="Location5"></figure> <!-- we give it an id so we can put a vega-lite graph here with VegaEmbed -->
     </section>
-
+</div>
 
 
 
