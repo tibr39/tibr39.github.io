@@ -5,5 +5,8 @@ For data manipulation I used python pandas library (in PyCharm) to filter the da
 The visualizations are embedded into the website using Vega and it's json format.
 
 
+
+
 Source of data:
 https://www.kaggle.com/datasets/prasad22/global-economy-indicators
+The tutorial I followed:https://github.com/EconomicsObservatory/courses/tree/main
